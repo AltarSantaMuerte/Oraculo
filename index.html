@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+content="width=device-width,
+initial-scale=1.0,
+maximum-scale=1.0,
+user-scalable=no">
 
 <title>La Santa Muerte</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
 
@@ -17,57 +21,51 @@ box-sizing:border-box;
 }
 
 body{
-width:100%;
+width:100vw;
 height:100vh;
 overflow:hidden;
-font-family:'Cinzel', serif;
 background:black;
-display:flex;
-justify-content:center;
-align-items:center;
 position:relative;
-color:#f5e6c8;
+font-family:serif;
 }
 
-/* FUNDO */
+/* ALTAR */
 
-.background{
+#altar{
 position:absolute;
 width:100%;
 height:100%;
-background:url('https://raw.githubusercontent.com/bortolinrafael/Santisima-Muerte/main/background.jpg') center center no-repeat;
-background-size:cover;
-filter:brightness(0.72);
+opacity:0;
+transition:2s;
+}
+
+/* IMAGEM */
+
+.main-image{
+position:absolute;
+width:100%;
+height:100%;
+object-fit:cover;
 z-index:1;
-}
-
-/* ESCURECER */
-
-.overlay{
-position:absolute;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.35);
-z-index:2;
 }
 
 /* FUMAÇA */
 
 .smoke{
 position:absolute;
-bottom:-350px;
-width:500px;
-height:500px;
-background:radial-gradient(circle, rgba(255,255,255,0.08), transparent 70%);
-animation:smoke 20s infinite linear;
+bottom:-300px;
+width:400px;
+height:400px;
+background:radial-gradient(circle,
+rgba(255,255,255,0.08),
+transparent 70%);
 filter:blur(60px);
-opacity:0.5;
+animation:smoke 18s linear infinite;
 z-index:3;
 }
 
 .smoke:nth-child(1){
 left:-10%;
-animation-delay:0s;
 }
 
 .smoke:nth-child(2){
@@ -76,33 +74,21 @@ animation-delay:8s;
 }
 
 @keyframes smoke{
+
 0%{
 transform:translateY(0) scale(1);
 opacity:0;
 }
 
 20%{
-opacity:0.35;
+opacity:0.4;
 }
 
 100%{
 transform:translateY(-140vh) scale(2);
 opacity:0;
 }
-}
 
-/* TÍTULO */
-
-.title{
-position:absolute;
-top:28px;
-width:100%;
-text-align:center;
-font-size:34px;
-letter-spacing:4px;
-z-index:10;
-color:#f3d9a2;
-text-shadow:0 0 15px rgba(255,215,120,0.6);
 }
 
 /* TEXTO */
@@ -112,90 +98,78 @@ position:absolute;
 top:47%;
 left:50%;
 transform:translate(-50%,-50%);
-width:220px;
+width:170px;
 text-align:center;
-font-size:15px;
-line-height:1.6;
-z-index:20;
-color:#4d2d12;
-padding:10px;
-animation:fadeIn 2s ease;
+font-size:14px;
+line-height:1.5;
+color:#4b2d12;
+z-index:5;
+font-weight:bold;
 }
 
-/* BOTÃO */
+/* BOTÃO ORÁCULO */
 
 .button{
 position:absolute;
-bottom:55px;
+bottom:40px;
 left:50%;
 transform:translateX(-50%);
-padding:14px 26px;
-border:1px solid rgba(255,230,180,0.5);
-background:rgba(0,0,0,0.35);
-backdrop-filter:blur(6px);
-color:#f5e6c8;
+padding:12px 22px;
+border:none;
+border-radius:30px;
+background:rgba(0,0,0,0.55);
+color:#f3d7a0;
 font-size:14px;
 letter-spacing:2px;
-cursor:pointer;
-border-radius:40px;
-transition:0.8s;
-z-index:30;
-font-family:'Cinzel', serif;
+z-index:10;
+backdrop-filter:blur(6px);
 }
 
-.button:hover{
-background:rgba(255,220,160,0.12);
-transform:translateX(-50%) scale(1.05);
+/* TELA INICIAL */
+
+#welcome{
+position:absolute;
+width:100%;
+height:100%;
+background:black;
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:100;
+transition:2s;
+}
+
+/* BOTÃO ENTRAR */
+
+.enter-button{
+padding:18px 32px;
+border:1px solid rgba(255,230,180,0.4);
+background:rgba(0,0,0,0.6);
+color:#f3d7a0;
+font-size:18px;
+letter-spacing:3px;
+border-radius:40px;
+backdrop-filter:blur(8px);
 }
 
 /* ANIMAÇÃO TEXTO */
 
 .fade{
-animation:magicFade 1.5s ease;
+animation:fadeMagic 1.5s ease;
 }
 
-@keyframes magicFade{
+@keyframes fadeMagic{
+
 0%{
 opacity:0;
 transform:translate(-50%,-40%);
-filter:blur(8px);
+filter:blur(10px);
 }
 
 100%{
 opacity:1;
 transform:translate(-50%,-50%);
 filter:blur(0);
-}
-}
-
-@keyframes fadeIn{
-0%{
-opacity:0;
-}
-100%{
-opacity:1;
-}
-}
-
-/* MOBILE */
-
-@media(max-width:768px){
-
-.title{
-font-size:28px;
-top:20px;
-}
-
-.scroll-text{
-width:210px;
-font-size:14px;
-top:47%;
-}
-
-.button{
-bottom:45px;
-font-size:13px;
-padding:12px 22px;
 }
 
 }
@@ -205,15 +179,33 @@ padding:12px 22px;
 
 <body>
 
-<div class="background"></div>
-<div class="overlay"></div>
+<!-- TELA INICIAL -->
+
+<div id="welcome">
+
+<button
+class="enter-button"
+onclick="enterAltar()">
+
+✦ Entrar al Altar ✦
+
+</button>
+
+</div>
+
+<!-- ALTAR -->
+
+<div id="altar">
+
+<img
+class="main-image"
+src="https://raw.githubusercontent.com/bortolinrafael/Santisima-Muerte/main/background.jpg">
 
 <div class="smoke"></div>
 <div class="smoke"></div>
 
-<h1 class="title">La Santa Muerte</h1>
-
-<div class="scroll-text" id="scrollText">
+<div class="scroll-text"
+id="scrollText">
 
 Santa Muerte,
 guía mis pensamientos,
@@ -230,21 +222,31 @@ Amén.
 
 </div>
 
-<button class="button" id="oracleButton" onclick="revealOracle()">
-✦ Revelar Oráculo
+<button
+class="button"
+id="oracleButton"
+onclick="revealOracle()">
+
+✦ Revelar Oráculo ✦
+
 </button>
 
-<audio id="bgMusic" loop autoplay>
-<source src="https://raw.githubusercontent.com/bortolinrafael/Santisima-Muerte/main/music.mp3" type="audio/mpeg">
+</div>
+
+<!-- MÚSICA -->
+
+<audio id="bgMusic" loop>
+
+<source
+src="https://raw.githubusercontent.com/bortolinrafael/Santisima-Muerte/main/music.mp3"
+type="audio/mpeg">
+
 </audio>
 
 <script>
 
-const audio = document.getElementById("bgMusic");
-
-document.body.addEventListener("click", () => {
-audio.play();
-}, { once:true });
+const audio =
+document.getElementById("bgMusic");
 
 const messages = [
 
@@ -256,43 +258,9 @@ const messages = [
 
 "Todo cambia incluso el dolor.",
 
-"Hoy no fue fácil… pero sigues aquí.",
-
-"La muerte enseña a valorar lo simple.",
-
 "Respira. Aún hay camino.",
 
-"No temas comenzar de nuevo.",
-
-"Tu alma necesita silencio.",
-
 "La Santa protege corazones cansados.",
-
-"Hasta la tristeza descansa algún día.",
-
-"No todo peso debe quedarse contigo.",
-
-"Las noches difíciles también terminan.",
-
-"La Flaquita escucha lo que callas.",
-
-"No confundas pausa con derrota.",
-
-"Tu energía volverá.",
-
-"Hay fuerza incluso en la tristeza.",
-
-"La Santa recuerda: sigue.",
-
-"No estás tan perdido como crees.",
-
-"El alma también necesita calma.",
-
-"A veces sobrevivir ya es victoria.",
-
-"La Santa cuida tus pasos invisibles.",
-
-"Todo renacimiento comienza en silencio.",
 
 "No luches contra cada sombra.",
 
@@ -300,32 +268,51 @@ const messages = [
 
 ];
 
-function revealOracle(){
+function enterAltar(){
+
+document
+.getElementById("welcome")
+.style.opacity="0";
+
+setTimeout(()=>{
+
+document
+.getElementById("welcome")
+.style.display="none";
+
+},1800);
+
+document
+.getElementById("altar")
+.style.opacity="1";
 
 audio.play();
 
-const text = document.getElementById("scrollText");
+}
 
-const button = document.getElementById("oracleButton");
+function revealOracle(){
 
-button.style.opacity = "0";
+const text =
+document.getElementById("scrollText");
 
-button.style.transform = "translateX(-50%) scale(0.9)";
+const button =
+document.getElementById("oracleButton");
 
-button.style.pointerEvents = "none";
+button.style.opacity="0";
 
-setTimeout(() => {
-button.style.display = "none";
-}, 800);
+setTimeout(()=>{
+button.style.display="none";
+},700);
 
 const randomMessage =
-messages[Math.floor(Math.random() * messages.length)];
+messages[Math.floor(
+Math.random()*messages.length)];
 
 text.classList.remove("fade");
 
 void text.offsetWidth;
 
-text.innerHTML = randomMessage;
+text.innerHTML=randomMessage;
 
 text.classList.add("fade");
 
