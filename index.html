@@ -53,24 +53,25 @@ z-index:1;
 
 .smoke{
 position:absolute;
-bottom:-300px;
-width:400px;
-height:400px;
-background:radial-gradient(circle,
-rgba(255,255,255,0.08),
+bottom:-350px;
+width:650px;
+height:650px;
+background:
+radial-gradient(circle,
+rgba(255,255,255,0.22),
 transparent 70%);
-filter:blur(60px);
-animation:smoke 18s linear infinite;
+filter:blur(90px);
+animation:smoke 14s linear infinite;
 z-index:3;
 }
 
 .smoke:nth-child(1){
-left:-10%;
+left:-20%;
 }
 
 .smoke:nth-child(2){
-right:-10%;
-animation-delay:8s;
+right:-20%;
+animation-delay:7s;
 }
 
 @keyframes smoke{
@@ -81,11 +82,11 @@ opacity:0;
 }
 
 20%{
-opacity:0.4;
+opacity:0.65;
 }
 
 100%{
-transform:translateY(-140vh) scale(2);
+transform:translateY(-150vh) scale(2.5);
 opacity:0;
 }
 
@@ -95,37 +96,41 @@ opacity:0;
 
 .scroll-text{
 position:absolute;
-top:47%;
+top:57%;
 left:50%;
 transform:translate(-50%,-50%);
-width:170px;
+width:210px;
 text-align:center;
-font-size:14px;
-line-height:1.5;
+font-size:17px;
+line-height:1.7;
 color:#4b2d12;
-z-index:5;
+z-index:10;
 font-weight:bold;
+text-shadow:
+0 0 8px rgba(255,230,180,0.15),
+0 0 18px rgba(255,220,140,0.08);
+transition:1.5s;
 }
 
 /* BOTÃO ORÁCULO */
 
 .button{
 position:absolute;
-bottom:40px;
+bottom:35px;
 left:50%;
 transform:translateX(-50%);
 padding:12px 22px;
 border:none;
 border-radius:30px;
-background:rgba(0,0,0,0.55);
+background:rgba(0,0,0,0.6);
 color:#f3d7a0;
 font-size:14px;
 letter-spacing:2px;
-z-index:10;
+z-index:20;
 backdrop-filter:blur(6px);
 }
 
-/* TELA INICIAL */
+/* ENTRADA */
 
 #welcome{
 position:absolute;
@@ -135,35 +140,87 @@ background:black;
 display:flex;
 justify-content:center;
 align-items:center;
+overflow:hidden;
 z-index:100;
 transition:2s;
+}
+
+/* CORTINAS */
+
+.curtain-left,
+.curtain-right{
+position:absolute;
+top:0;
+width:50%;
+height:100%;
+background:
+linear-gradient(
+to right,
+#090909,
+#1b0000,
+#090909
+);
+z-index:101;
+transition:2.5s ease;
+}
+
+.curtain-left{
+left:0;
+border-right:1px solid rgba(255,215,120,0.15);
+}
+
+.curtain-right{
+right:0;
+border-left:1px solid rgba(255,215,120,0.15);
 }
 
 /* BOTÃO ENTRAR */
 
 .enter-button{
+position:relative;
 padding:18px 32px;
 border:1px solid rgba(255,230,180,0.4);
-background:rgba(0,0,0,0.6);
+background:rgba(0,0,0,0.65);
 color:#f3d7a0;
 font-size:18px;
 letter-spacing:3px;
 border-radius:40px;
 backdrop-filter:blur(8px);
+z-index:120;
 }
 
-/* ANIMAÇÃO TEXTO */
+/* ANIMAÇÕES TEXTO */
 
-.fade{
-animation:fadeMagic 1.5s ease;
+.fade-out{
+animation:fadeOutMagic 1.2s ease forwards;
 }
 
-@keyframes fadeMagic{
+.fade-in{
+animation:fadeInMagic 2s ease;
+}
+
+@keyframes fadeOutMagic{
+
+0%{
+opacity:1;
+transform:translate(-50%,-50%);
+filter:blur(0);
+}
+
+100%{
+opacity:0;
+transform:translate(-50%,-58%);
+filter:blur(14px);
+}
+
+}
+
+@keyframes fadeInMagic{
 
 0%{
 opacity:0;
-transform:translate(-50%,-40%);
-filter:blur(10px);
+transform:translate(-50%,-42%);
+filter:blur(14px);
 }
 
 100%{
@@ -179,9 +236,12 @@ filter:blur(0);
 
 <body>
 
-<!-- TELA INICIAL -->
+<!-- ENTRADA -->
 
 <div id="welcome">
+
+<div class="curtain-left" id="curtainLeft"></div>
+<div class="curtain-right" id="curtainRight"></div>
 
 <button
 class="enter-button"
@@ -204,7 +264,8 @@ src="https://raw.githubusercontent.com/bortolinrafael/Santisima-Muerte/main/back
 <div class="smoke"></div>
 <div class="smoke"></div>
 
-<div class="scroll-text"
+<div
+class="scroll-text"
 id="scrollText">
 
 Santa Muerte,
@@ -233,7 +294,7 @@ onclick="revealOracle()">
 
 </div>
 
-<!-- MÚSICA -->
+<!-- ÁUDIO -->
 
 <audio id="bgMusic" loop>
 
@@ -264,15 +325,49 @@ const messages = [
 
 "No luches contra cada sombra.",
 
-"La paz también llega despacio."
+"La paz también llega despacio.",
+
+"La muerte también enseña calma.",
+
+"Tu alma aún tiene luz.",
+
+"No temas al cambio.",
+
+"Todo renace después del silencio.",
+
+"La Santa escucha tu dolor.",
+
+"Las heridas también enseñan.",
+
+"No toda oscuridad es enemiga.",
+
+"La calma llegará.",
+
+"Tu espíritu sigue fuerte.",
+
+"La Flaquita protege tu camino.",
+
+"Cada noche trae revelaciones.",
+
+"No temas soltar lo que pesa."
 
 ];
 
 function enterAltar(){
 
+audio.play();
+
+document
+.getElementById("curtainLeft")
+.style.transform="translateX(-100%)";
+
+document
+.getElementById("curtainRight")
+.style.transform="translateX(100%)";
+
 document
 .getElementById("welcome")
-.style.opacity="0";
+.style.background="transparent";
 
 setTimeout(()=>{
 
@@ -280,13 +375,11 @@ document
 .getElementById("welcome")
 .style.display="none";
 
-},1800);
+},2200);
 
 document
 .getElementById("altar")
 .style.opacity="1";
-
-audio.play();
 
 }
 
@@ -304,17 +397,23 @@ setTimeout(()=>{
 button.style.display="none";
 },700);
 
+/* TEXTO SAINDO */
+
+text.classList.add("fade-out");
+
+setTimeout(()=>{
+
 const randomMessage =
 messages[Math.floor(
 Math.random()*messages.length)];
 
-text.classList.remove("fade");
-
-void text.offsetWidth;
-
 text.innerHTML=randomMessage;
 
-text.classList.add("fade");
+text.classList.remove("fade-out");
+
+text.classList.add("fade-in");
+
+},1200);
 
 }
 
