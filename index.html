@@ -10,6 +10,8 @@ initial-scale=1.0,
 maximum-scale=1.0,
 user-scalable=no">
 
+<meta name="theme-color" content="#000000">
+
 <title>Oráculo de La Santa Muerte</title>
 
 <style>
@@ -37,6 +39,7 @@ width:100%;
 height:100%;
 opacity:0;
 transition:2s;
+overflow:hidden;
 }
 
 /* IMAGEM */
@@ -48,29 +51,47 @@ height:100%;
 object-fit:contain;
 background:black;
 z-index:1;
+animation:breath 8s ease-in-out infinite;
+}
+
+/* RESPIRAÇÃO DA SANTA */
+
+@keyframes breath{
+
+0%{
+transform:scale(1);
+}
+
+50%{
+transform:scale(1.012);
+}
+
+100%{
+transform:scale(1);
+}
+
 }
 
 /* FUMAÇA */
 
 .smoke{
 position:absolute;
-bottom:-250px;
+bottom:-200px;
 width:320px;
 height:320px;
 
 background:
 radial-gradient(
 circle,
-rgba(220,220,220,0.35),
+rgba(220,220,220,0.30),
 transparent 70%
 );
 
 filter:blur(35px);
 
-animation:smoke 14s linear infinite;
+animation:smoke 18s linear infinite;
 
 z-index:3;
-
 pointer-events:none;
 }
 
@@ -80,7 +101,7 @@ left:-10%;
 
 .smoke:nth-child(2){
 right:-10%;
-animation-delay:7s;
+animation-delay:8s;
 }
 
 @keyframes smoke{
@@ -91,7 +112,7 @@ opacity:0;
 }
 
 20%{
-opacity:0.7;
+opacity:0.6;
 }
 
 100%{
@@ -101,32 +122,95 @@ opacity:0;
 
 }
 
+/* PARTÍCULAS DOURADAS */
+
+.particle{
+position:absolute;
+width:3px;
+height:3px;
+border-radius:50%;
+background:rgba(255,210,120,0.7);
+box-shadow:
+0 0 8px rgba(255,210,120,0.9);
+
+animation:floatParticle linear infinite;
+z-index:4;
+}
+
+@keyframes floatParticle{
+
+0%{
+transform:translateY(0);
+opacity:0;
+}
+
+10%{
+opacity:1;
+}
+
+100%{
+transform:translateY(-120vh);
+opacity:0;
+}
+
+}
+
+/* AMBIENTE LATERAL WEB */
+
+.side-glow{
+position:absolute;
+top:0;
+width:20%;
+height:100%;
+z-index:2;
+pointer-events:none;
+}
+
+.left-glow{
+left:0;
+background:
+radial-gradient(circle at left,
+rgba(80,0,0,0.35),
+transparent 70%);
+}
+
+.right-glow{
+right:0;
+background:
+radial-gradient(circle at right,
+rgba(80,0,0,0.35),
+transparent 70%);
+}
+
 /* TEXTO */
 
 .scroll-text{
 position:absolute;
+
 top:65%;
 left:50%;
 
 transform:translate(-50%,-50%);
 
-width:210px;
+width:220px;
 
 text-align:center;
 
 font-size:17px;
 
-line-height:1.35;
+line-height:1.25;
 
-color:#4b2d12;
+color:#5b3417;
 
 z-index:10;
 
 font-weight:bold;
 
 text-shadow:
-0 0 8px rgba(255,230,180,0.15),
-0 0 18px rgba(255,220,140,0.08);
+0 0 3px rgba(0,0,0,0.95),
+0 0 8px rgba(0,0,0,0.85),
+0 0 12px rgba(255,220,120,0.18),
+0 0 22px rgba(255,210,100,0.08);
 
 transition:1.5s;
 }
@@ -142,13 +226,13 @@ left:50%;
 
 transform:translateX(-50%);
 
-padding:12px 22px;
+padding:12px 24px;
 
 border:none;
 
 border-radius:30px;
 
-background:rgba(0,0,0,0.6);
+background:rgba(0,0,0,0.65);
 
 color:#f3d7a0;
 
@@ -160,10 +244,13 @@ z-index:20;
 
 backdrop-filter:blur(6px);
 
+box-shadow:
+0 0 15px rgba(255,200,100,0.12);
+
 transition:1s;
 }
 
-/* TELA INICIAL */
+/* ENTRADA */
 
 #welcome{
 position:absolute;
@@ -181,8 +268,6 @@ align-items:center;
 overflow:hidden;
 
 z-index:100;
-
-transition:2s;
 }
 
 /* CORTINAS */
@@ -200,14 +285,19 @@ height:100%;
 background:
 repeating-linear-gradient(
 90deg,
-#120000 0px,
-#220000 18px,
-#120000 36px
+#160000 0px,
+#2b0000 12px,
+#120000 24px,
+#2a0000 36px
 );
+
+box-shadow:
+inset 0 0 40px rgba(0,0,0,0.9),
+inset 0 0 90px rgba(0,0,0,0.6);
 
 z-index:101;
 
-transition:2.5s ease;
+transition:2.8s cubic-bezier(.77,0,.18,1);
 }
 
 .curtain-left{
@@ -243,6 +333,9 @@ border-radius:40px;
 backdrop-filter:blur(8px);
 
 z-index:120;
+
+box-shadow:
+0 0 20px rgba(255,220,120,0.15);
 }
 
 /* TRANSIÇÕES */
@@ -308,6 +401,7 @@ id="curtainRight">
 
 <button
 class="enter-button"
+id="enterButton"
 onclick="enterAltar()">
 
 ✦ Entrar al Altar ✦
@@ -319,6 +413,9 @@ onclick="enterAltar()">
 <!-- ALTAR -->
 
 <div id="altar">
+
+<div class="side-glow left-glow"></div>
+<div class="side-glow right-glow"></div>
 
 <img
 class="main-image"
@@ -357,7 +454,7 @@ onclick="revealOracle()">
 
 </div>
 
-<!-- ÁUDIO -->
+<!-- ÁUDIO PRINCIPAL -->
 
 <audio
 id="bgMusic"
@@ -369,10 +466,52 @@ type="audio/mpeg">
 
 </audio>
 
+<!-- GONGO -->
+
+<audio id="gongSound">
+
+<source
+src="https://assets.mixkit.co/active_storage/sfx/209/209-preview.mp3"
+type="audio/mpeg">
+
+</audio>
+
 <script>
+
+/* ÁUDIOS */
 
 const audio =
 document.getElementById("bgMusic");
+
+const gong =
+document.getElementById("gongSound");
+
+/* CONTADOR */
+
+let visitCount =
+localStorage.getItem("visitCount") || 0;
+
+visitCount++;
+
+localStorage.setItem(
+"visitCount",
+visitCount
+);
+
+/* TEXTO */
+
+const text =
+document.getElementById("scrollText");
+
+/* ORAÇÃO ESPECIAL */
+
+if(visitCount % 20 == 0){
+
+text.innerHTML =
+
+"La Santa Muerte abre un nuevo ciclo ante ti.<br><br>Que toda sombra se transforme en sabiduría y toda herida en fuerza.<br><br>Hoy el altar escucha tu espíritu con especial atención.";
+
+}
 
 /* FRASES */
 
@@ -420,13 +559,65 @@ const messages = [
 
 ];
 
+/* PARTÍCULAS */
+
+for(let i=0;i<45;i++){
+
+const particle =
+document.createElement("div");
+
+particle.classList.add("particle");
+
+particle.style.left =
+Math.random()*100+"vw";
+
+particle.style.bottom =
+"-10px";
+
+particle.style.animationDuration =
+(10 + Math.random()*12)+"s";
+
+particle.style.animationDelay =
+Math.random()*10+"s";
+
+document.body.appendChild(particle);
+
+}
+
 /* ENTRAR */
 
 function enterAltar(){
 
+/* VIBRAÇÃO */
+
+if(navigator.vibrate){
+navigator.vibrate(120);
+}
+
+/* GONGO */
+
+gong.play();
+
+/* MÚSICA */
+
+setTimeout(()=>{
 audio.play();
+},700);
+
+/* BOTÃO SOME */
+
+const enterButton =
+document.getElementById("enterButton");
+
+enterButton.style.opacity="0";
+
+setTimeout(()=>{
+enterButton.style.display="none";
+},600);
 
 /* CORTINAS */
+
+setTimeout(()=>{
 
 document
 .getElementById("curtainLeft")
@@ -436,11 +627,9 @@ document
 .getElementById("curtainRight")
 .style.transform="translateX(100%)";
 
-document
-.getElementById("welcome")
-.style.background="transparent";
+},500);
 
-/* SOME TELA */
+/* TELA SOME */
 
 setTimeout(()=>{
 
@@ -448,7 +637,7 @@ document
 .getElementById("welcome")
 .style.display="none";
 
-},2200);
+},2800);
 
 /* ALTAR */
 
@@ -462,8 +651,11 @@ document
 
 function revealOracle(){
 
-const text =
-document.getElementById("scrollText");
+/* VIBRAÇÃO */
+
+if(navigator.vibrate){
+navigator.vibrate([120,60,120]);
+}
 
 const button =
 document.getElementById("oracleButton");
@@ -476,7 +668,7 @@ setTimeout(()=>{
 button.style.display="none";
 },700);
 
-/* TEXTO SAI */
+/* TEXTO SOME */
 
 text.classList.add("fade-out");
 
@@ -486,15 +678,11 @@ const randomMessage =
 messages[Math.floor(
 Math.random()*messages.length)];
 
-/* TROCA TEXTO */
-
 text.innerHTML=randomMessage;
-
-/* REMOVE ANIMAÇÃO ANTIGA */
 
 text.classList.remove("fade-out");
 
-/* ENTRA NOVAMENTE */
+void text.offsetWidth;
 
 text.classList.add("fade-in");
 
