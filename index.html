@@ -10,7 +10,7 @@ initial-scale=1.0,
 maximum-scale=1.0,
 user-scalable=no">
 
-<title>La Santa Muerte</title>
+<title>Oráculo de La Santa Muerte</title>
 
 <style>
 
@@ -57,13 +57,20 @@ position:absolute;
 bottom:-250px;
 width:320px;
 height:320px;
+
 background:
-radial-gradient(circle,
+radial-gradient(
+circle,
 rgba(220,220,220,0.35),
-transparent 70%);
+transparent 70%
+);
+
 filter:blur(35px);
+
 animation:smoke 14s linear infinite;
+
 z-index:3;
+
 pointer-events:none;
 }
 
@@ -100,50 +107,81 @@ opacity:0;
 position:absolute;
 top:65%;
 left:50%;
+
 transform:translate(-50%,-50%);
+
 width:210px;
+
 text-align:center;
+
 font-size:17px;
+
 line-height:1.35;
+
 color:#4b2d12;
+
 z-index:10;
+
 font-weight:bold;
+
 text-shadow:
 0 0 8px rgba(255,230,180,0.15),
 0 0 18px rgba(255,220,140,0.08);
+
 transition:1.5s;
 }
 
-/* BOTÃO ORÁCULO */
+/* BOTÃO */
 
 .button{
 position:absolute;
+
 bottom:35px;
+
 left:50%;
+
 transform:translateX(-50%);
+
 padding:12px 22px;
+
 border:none;
+
 border-radius:30px;
+
 background:rgba(0,0,0,0.6);
+
 color:#f3d7a0;
+
 font-size:14px;
+
 letter-spacing:2px;
+
 z-index:20;
+
 backdrop-filter:blur(6px);
+
+transition:1s;
 }
 
-/* ENTRADA */
+/* TELA INICIAL */
 
 #welcome{
 position:absolute;
+
 width:100%;
 height:100%;
+
 background:black;
+
 display:flex;
+
 justify-content:center;
 align-items:center;
+
 overflow:hidden;
+
 z-index:100;
+
 transition:2s;
 }
 
@@ -151,8 +189,11 @@ transition:2s;
 
 .curtain-left,
 .curtain-right{
+
 position:absolute;
+
 top:0;
+
 width:50%;
 height:100%;
 
@@ -165,6 +206,7 @@ repeating-linear-gradient(
 );
 
 z-index:101;
+
 transition:2.5s ease;
 }
 
@@ -181,19 +223,29 @@ border-left:1px solid rgba(255,215,120,0.15);
 /* BOTÃO ENTRAR */
 
 .enter-button{
+
 position:relative;
+
 padding:18px 32px;
+
 border:1px solid rgba(255,230,180,0.4);
+
 background:rgba(0,0,0,0.65);
+
 color:#f3d7a0;
+
 font-size:18px;
+
 letter-spacing:3px;
+
 border-radius:40px;
+
 backdrop-filter:blur(8px);
+
 z-index:120;
 }
 
-/* ANIMAÇÕES TEXTO */
+/* TRANSIÇÕES */
 
 .fade-out{
 animation:fadeOutMagic 1.2s ease forwards;
@@ -244,8 +296,15 @@ filter:blur(0);
 
 <div id="welcome">
 
-<div class="curtain-left" id="curtainLeft"></div>
-<div class="curtain-right" id="curtainRight"></div>
+<div
+class="curtain-left"
+id="curtainLeft">
+</div>
+
+<div
+class="curtain-right"
+id="curtainRight">
+</div>
 
 <button
 class="enter-button"
@@ -263,7 +322,7 @@ onclick="enterAltar()">
 
 <img
 class="main-image"
-src="https://raw.githubusercontent.com/bortolinrafael/Santisima-Muerte/main/background.jpg">
+src="https://raw.githubusercontent.com/AltarSantaMuerte/Oraculo/main/background.jpg">
 
 <div class="smoke"></div>
 <div class="smoke"></div>
@@ -300,7 +359,9 @@ onclick="revealOracle()">
 
 <!-- ÁUDIO -->
 
-<audio id="bgMusic" loop>
+<audio
+id="bgMusic"
+loop>
 
 <source
 src="https://files.catbox.moe/h6a4w1.mp3"
@@ -312,6 +373,8 @@ type="audio/mpeg">
 
 const audio =
 document.getElementById("bgMusic");
+
+/* FRASES */
 
 const messages = [
 
@@ -357,9 +420,13 @@ const messages = [
 
 ];
 
+/* ENTRAR */
+
 function enterAltar(){
 
 audio.play();
+
+/* CORTINAS */
 
 document
 .getElementById("curtainLeft")
@@ -373,6 +440,8 @@ document
 .getElementById("welcome")
 .style.background="transparent";
 
+/* SOME TELA */
+
 setTimeout(()=>{
 
 document
@@ -381,11 +450,15 @@ document
 
 },2200);
 
+/* ALTAR */
+
 document
 .getElementById("altar")
 .style.opacity="1";
 
 }
+
+/* ORÁCULO */
 
 function revealOracle(){
 
@@ -395,13 +468,15 @@ document.getElementById("scrollText");
 const button =
 document.getElementById("oracleButton");
 
+/* BOTÃO SOME */
+
 button.style.opacity="0";
 
 setTimeout(()=>{
 button.style.display="none";
 },700);
 
-/* TEXTO SAINDO */
+/* TEXTO SAI */
 
 text.classList.add("fade-out");
 
@@ -411,9 +486,15 @@ const randomMessage =
 messages[Math.floor(
 Math.random()*messages.length)];
 
+/* TROCA TEXTO */
+
 text.innerHTML=randomMessage;
 
+/* REMOVE ANIMAÇÃO ANTIGA */
+
 text.classList.remove("fade-out");
+
+/* ENTRA NOVAMENTE */
 
 text.classList.add("fade-in");
 
