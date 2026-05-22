@@ -1,360 +1,546 @@
-/* ========================= */
-/* PORTAS DE PEDRA REALISTAS */
-/* ========================= */
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-#intro{
-    position:fixed;
-    inset:0;
-    z-index:9999;
-    overflow:hidden;
-    background:#000;
+<title>La Santa Muerte</title>
+
+<style>
+
+html,body{
+margin:0;
+padding:0;
+width:100%;
+height:100%;
+overflow:hidden;
+background:#000;
+font-family:Georgia,serif;
 }
 
-/* FUNDO JÁ COM A SANTA ATRÁS */
+/* FUNDO */
 
-#intro::before{
-    content:"";
-    position:absolute;
-    inset:0;
+body{
+background:
+radial-gradient(circle at left, rgba(120,60,0,0.12), transparent 30%),
+radial-gradient(circle at right, rgba(120,60,0,0.12), transparent 30%),
+#000;
+}
 
-    background-image:url("background.jpg");
-    background-size:contain;
-    background-repeat:no-repeat;
-    background-position:center;
+/* ALTAR */
 
-    opacity:1;
+#altar{
+position:fixed;
+inset:0;
+display:flex;
+justify-content:center;
+align-items:center;
+overflow:hidden;
+}
 
-    z-index:1;
+/* IMAGEM */
+
+#bg{
+position:absolute;
+top:50%;
+left:50%;
+
+transform:translate(-50%,-50%);
+
+height:100%;
+width:auto;
+
+object-fit:contain;
+
+z-index:1;
+
+animation:breath 6s ease-in-out infinite;
+}
+
+@keyframes breath{
+
+0%{
+transform:translate(-50%,-50%) scale(1);
+}
+
+50%{
+transform:translate(-50%,-50%) scale(1.02);
+}
+
+100%{
+transform:translate(-50%,-50%) scale(1);
+}
+
+}
+
+/* TEXTO */
+
+#textBox{
+
+position:absolute;
+
+top:66%;
+left:50%;
+
+transform:translateX(-50%);
+
+width:54%;
+max-width:500px;
+
+z-index:5;
+
+text-align:center;
+
+font-size:2rem;
+line-height:1.15;
+
+font-weight:bold;
+
+color:#3a1c0f;
+
+text-shadow:
+0 2px 4px rgba(255,240,200,0.15),
+0 2px 10px rgba(0,0,0,0.4);
+
+animation:textIn 1.5s ease;
+}
+
+@keyframes textIn{
+
+from{
+opacity:0;
+filter:blur(10px);
+transform:translateX(-50%) translateY(20px);
+}
+
+to{
+opacity:1;
+filter:blur(0px);
+transform:translateX(-50%) translateY(0px);
+}
+
+}
+
+.fadeOut{
+animation:textOut 1s forwards;
+}
+
+@keyframes textOut{
+
+from{
+opacity:1;
+filter:blur(0px);
+transform:translateX(-50%) translateY(0px);
+}
+
+to{
+opacity:0;
+filter:blur(12px);
+transform:translateX(-50%) translateY(-25px);
+}
+
+}
+
+/* BOTÃO ORÁCULO */
+
+#oracleButton{
+
+position:absolute;
+
+bottom:5%;
+left:50%;
+
+transform:translateX(-50%);
+
+z-index:10;
+
+background:rgba(0,0,0,0.7);
+
+color:#f0d3a0;
+
+border:2px solid rgba(255,220,120,0.2);
+
+padding:16px 32px;
+
+border-radius:40px;
+
+font-size:1.2rem;
+
+letter-spacing:2px;
+
+box-shadow:
+0 0 20px rgba(255,180,80,0.2);
+
+transition:0.5s;
+}
+
+.hideOracle{
+opacity:0;
+transform:translateX(-50%) scale(0.7);
+}
+
+/* INTRO */
+
+#intro{
+
+position:fixed;
+inset:0;
+
+z-index:9999;
+
+overflow:hidden;
+}
+
+/* SANTA ATRÁS DAS PORTAS */
+
+#introBackground{
+
+position:absolute;
+inset:0;
+
+background-image:url("background.jpg");
+background-size:contain;
+background-repeat:no-repeat;
+background-position:center;
+
+background-color:#000;
+
+z-index:1;
 }
 
 /* PORTAS */
 
 .door{
-    position:absolute;
-    top:0;
-    width:50%;
-    height:100%;
 
-    z-index:3;
+position:absolute;
 
-    background:
-    linear-gradient(
-        to right,
-        #151515,
-        #2d2d2d,
-        #111
-    );
+top:0;
 
-    box-shadow:
-    inset 0 0 60px rgba(0,0,0,0.9),
-    inset 0 0 20px rgba(255,220,120,0.08);
+width:50%;
+height:100%;
 
-    transition:
-    transform 2.4s cubic-bezier(.7,0,.2,1);
+z-index:3;
 
-    overflow:hidden;
+background:
+linear-gradient(
+to right,
+#111,
+#2d2d2d,
+#161616
+);
+
+box-shadow:
+inset 0 0 60px rgba(0,0,0,0.9),
+inset 0 0 20px rgba(255,220,120,0.05);
+
+transition:transform 2.2s cubic-bezier(.7,0,.2,1);
+}
+
+.left{
+left:0;
+border-right:2px solid rgba(255,220,120,0.1);
+}
+
+.right{
+right:0;
+border-left:2px solid rgba(255,220,120,0.1);
+}
+
+.open .left{
+transform:translateX(-100%);
+}
+
+.open .right{
+transform:translateX(100%);
 }
 
 /* TEXTURA PEDRA */
 
 .door::before{
-    content:"";
-    position:absolute;
-    inset:0;
 
-    background:
-    repeating-linear-gradient(
-        0deg,
-        rgba(255,255,255,0.02) 0px,
-        rgba(255,255,255,0.02) 2px,
-        transparent 2px,
-        transparent 18px
-    );
+content:"";
 
-    mix-blend-mode:overlay;
+position:absolute;
+inset:0;
+
+background:
+repeating-linear-gradient(
+0deg,
+rgba(255,255,255,0.02) 0px,
+rgba(255,255,255,0.02) 2px,
+transparent 2px,
+transparent 20px
+);
 }
 
-.left{
-    left:0;
-    border-right:2px solid rgba(255,220,120,0.15);
-}
-
-.right{
-    right:0;
-    border-left:2px solid rgba(255,220,120,0.15);
-}
-
-.open .left{
-    transform:translateX(-100%);
-}
-
-.open .right{
-    transform:translateX(100%);
-}
-
-/* ========================= */
 /* BOTÃO ENTRAR */
-/* ========================= */
 
 #enterButton{
-    position:absolute;
 
-    left:50%;
-    top:78%;
+position:absolute;
 
-    transform:translate(-50%, -50%);
+left:50%;
+top:76%;
 
-    z-index:5;
+transform:translate(-50%,-50%);
 
-    background:rgba(0,0,0,0.72);
+z-index:5;
 
-    color:#f0d2a0;
+background:rgba(0,0,0,0.72);
 
-    border:2px solid rgba(255,220,120,0.22);
+color:#f2d4a0;
 
-    padding:18px 36px;
+border:2px solid rgba(255,220,120,0.2);
 
-    border-radius:50px;
+padding:18px 34px;
 
-    font-size:1.2rem;
+border-radius:40px;
 
-    letter-spacing:4px;
+font-size:1.2rem;
 
-    white-space:nowrap;
+letter-spacing:3px;
 
-    box-shadow:
-    0 0 25px rgba(255,180,80,0.22);
+white-space:nowrap;
 
-    transition:0.8s;
+box-shadow:
+0 0 20px rgba(255,180,80,0.2);
+
+transition:0.7s;
 }
 
 .hideButton{
-    opacity:0;
-    transform:translate(-50%, -50%) scale(0.7);
+opacity:0;
+transform:translate(-50%,-50%) scale(0.7);
 }
 
-/* ========================= */
-/* IMAGEM PRINCIPAL */
-/* ========================= */
-
-#bg{
-    position:absolute;
-
-    top:50%;
-    left:50%;
-
-    transform:translate(-50%, -50%);
-
-    height:100%;
-    width:auto;
-
-    object-fit:contain;
-
-    z-index:1;
-
-    animation:breath 6s ease-in-out infinite;
-}
-
-@keyframes breath{
-
-    0%{
-        transform:translate(-50%, -50%) scale(1);
-    }
-
-    50%{
-        transform:translate(-50%, -50%) scale(1.02);
-    }
-
-    100%{
-        transform:translate(-50%, -50%) scale(1);
-    }
-}
-
-/* ========================= */
-/* TEXTO */
-/* ========================= */
-
-#textBox{
-
-    position:absolute;
-
-    top:66%;
-    left:50%;
-
-    transform:translateX(-50%);
-
-    width:52%;
-    max-width:500px;
-
-    text-align:center;
-
-    z-index:10;
-
-    color:#3a1e0f;
-
-    font-size:2rem;
-
-    line-height:1.15;
-
-    font-weight:bold;
-
-    text-shadow:
-    0 2px 3px rgba(255,240,200,0.18),
-    0 3px 8px rgba(0,0,0,0.4);
-
-    animation:textAppear 1.8s ease;
-}
-
-@keyframes textAppear{
-
-    from{
-        opacity:0;
-        filter:blur(12px);
-        transform:translateX(-50%) translateY(20px);
-    }
-
-    to{
-        opacity:1;
-        filter:blur(0px);
-        transform:translateX(-50%) translateY(0px);
-    }
-}
-
-.fadeOut{
-    animation:textDisappear 1s forwards;
-}
-
-@keyframes textDisappear{
-
-    from{
-        opacity:1;
-        filter:blur(0px);
-        transform:translateX(-50%) translateY(0px);
-    }
-
-    to{
-        opacity:0;
-        filter:blur(12px);
-        transform:translateX(-50%) translateY(-25px);
-    }
-}
-
-/* ========================= */
-/* REMOVE FUMAÇA ANTIGA */
-/* ========================= */
-
-.smoke{
-    display:none !important;
-}
-
-/* ========================= */
-/* PARTÍCULAS OURO */
-/* ========================= */
+/* PARTÍCULAS */
 
 .particle{
-    position:absolute;
 
-    width:3px;
-    height:3px;
+position:absolute;
 
-    border-radius:50%;
+width:3px;
+height:3px;
 
-    background:rgba(255,210,120,0.7);
+border-radius:50%;
 
-    box-shadow:
-    0 0 10px rgba(255,190,90,0.7);
+background:rgba(255,210,120,0.75);
 
-    animation:floatUp linear infinite;
+box-shadow:
+0 0 10px rgba(255,190,90,0.8);
 
-    z-index:2;
+animation:floatUp linear infinite;
 }
 
 @keyframes floatUp{
 
-    from{
-        transform:translateY(0);
-        opacity:0;
-    }
-
-    20%{
-        opacity:1;
-    }
-
-    100%{
-        transform:translateY(-120vh);
-        opacity:0;
-    }
+from{
+transform:translateY(0);
+opacity:0;
 }
 
-/* ========================= */
-/* FUNDO PRETO AMBIENTADO */
-/* ========================= */
-
-body::before{
-
-    content:"";
-
-    position:fixed;
-
-    inset:0;
-
-    pointer-events:none;
-
-    background:
-    radial-gradient(circle at left,
-    rgba(130,70,0,0.12),
-    transparent 28%),
-
-    radial-gradient(circle at right,
-    rgba(130,70,0,0.12),
-    transparent 28%),
-
-    linear-gradient(to bottom,
-    rgba(255,180,80,0.03),
-    transparent 25%);
-
-    z-index:0;
+20%{
+opacity:1;
 }
 
-/* ========================= */
+100%{
+transform:translateY(-120vh);
+opacity:0;
+}
+
+}
+
 /* MOBILE */
-/* ========================= */
 
 @media(max-width:768px){
 
-    #bg{
-        width:100%;
-        height:auto;
-    }
-
-    #textBox{
-
-        width:56%;
-
-        top:67%;
-
-        font-size:1.08rem;
-
-        line-height:1.2;
-    }
-
-    #oracleButton{
-
-        bottom:4%;
-
-        font-size:1rem;
-
-        padding:14px 26px;
-    }
-
-    #enterButton{
-
-        top:78%;
-
-        font-size:1rem;
-
-        padding:16px 28px;
-
-        letter-spacing:2px;
-    }
+#bg{
+width:100%;
+height:auto;
 }
+
+#textBox{
+
+width:58%;
+
+top:67%;
+
+font-size:1.05rem;
+
+line-height:1.2;
+}
+
+#oracleButton{
+
+font-size:1rem;
+
+padding:14px 24px;
+}
+
+#enterButton{
+
+font-size:1rem;
+
+padding:16px 26px;
+
+letter-spacing:2px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="altar">
+
+<img src="background.jpg" id="bg">
+
+<div id="textBox">
+
+Santa Muerte, guía mis pensamientos,
+protege mi espíritu y aleja toda oscuridad de mi camino.
+Permite que mi alma encuentre claridad,
+paz y fuerza para continuar. Amén.
+
+</div>
+
+<button id="oracleButton">
+Revelar Oráculo
+</button>
+
+</div>
+
+<!-- INTRO -->
+
+<div id="intro">
+
+<div id="introBackground"></div>
+
+<div class="door left"></div>
+<div class="door right"></div>
+
+<button id="enterButton">
+✦ Entrar al Altar ✦
+</button>
+
+</div>
+
+<audio id="music" loop playsinline>
+<source src="https://files.catbox.moe/h6a4w1.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+/* ORÁCULOS */
+
+const messages=[
+
+"Lo que hoy parece confusión, mañana será revelación.",
+
+"Tu intuición ya sabe lo que tu mente teme aceptar.",
+
+"Hay caminos que solo se abren cuando dejas de forzarlos.",
+
+"La oscuridad también protege aquello que aún no debe ser visto.",
+
+"Escucha el silencio. Allí está la respuesta.",
+
+"El miedo desaparece cuando aceptas tu transformación."
+
+];
+
+/* ELEMENTOS */
+
+const enterButton=document.getElementById("enterButton");
+const intro=document.getElementById("intro");
+
+const music=document.getElementById("music");
+
+const textBox=document.getElementById("textBox");
+const oracleButton=document.getElementById("oracleButton");
+
+/* ENTRAR */
+
+enterButton.addEventListener("click",()=>{
+
+music.volume=0.7;
+
+music.play().catch(()=>{});
+
+enterButton.classList.add("hideButton");
+
+setTimeout(()=>{
+
+intro.classList.add("open");
+
+},500);
+
+});
+
+/* ORÁCULO */
+
+oracleButton.addEventListener("click",()=>{
+
+if(navigator.vibrate){
+navigator.vibrate(150);
+}
+
+oracleButton.classList.add("hideOracle");
+
+textBox.classList.add("fadeOut");
+
+setTimeout(()=>{
+
+const random=
+messages[Math.floor(Math.random()*messages.length)];
+
+textBox.innerHTML=random;
+
+textBox.classList.remove("fadeOut");
+
+void textBox.offsetWidth;
+
+textBox.style.animation="textIn 1.5s ease";
+
+},1000);
+
+});
+
+/* PARTÍCULAS */
+
+for(let i=0;i<35;i++){
+
+const p=document.createElement("div");
+
+p.classList.add("particle");
+
+const side=Math.random()>0.5;
+
+if(side){
+
+p.style.left=(Math.random()*12)+"%";
+
+}else{
+
+p.style.left=(88+Math.random()*12)+"%";
+
+}
+
+p.style.bottom="-20px";
+
+p.style.animationDuration=
+(8+Math.random()*10)+"s";
+
+p.style.animationDelay=
+Math.random()*10+"s";
+
+document.body.appendChild(p);
+
+}
+
+</script>
+
+</body>
+</html>
