@@ -22,31 +22,28 @@ padding:0;
 box-sizing:border-box;
 }
 
-html, body{
+html,body{
 width:100%;
 height:100%;
 overflow:hidden;
-
+background:black;
+font-family:serif;
 touch-action:manipulation;
-overscroll-behavior:none;
 }
+
+/* FUNDO */
 
 body{
 
+background:
+url("ritual-bg.jpg")
+center center / cover
+no-repeat fixed;
+
 position:relative;
-font-family:serif;
-background:#000;
-
-/* FUNDO NOVO */
-
-background-image:url("ritual-bg.jpg");
-
-background-size:cover;
-background-position:center;
-background-repeat:no-repeat;
 }
 
-/* FUNDO LATERAL */
+/* ESCURECIMENTO SUAVE */
 
 body::before{
 
@@ -56,20 +53,7 @@ position:absolute;
 inset:0;
 
 background:
-
-radial-gradient(
-circle at center,
-transparent 35%,
-rgba(80,20,0,0.10) 70%,
-rgba(120,70,20,0.08) 100%
-),
-
-repeating-linear-gradient(
-90deg,
-transparent 0px,
-rgba(255,180,80,0.018) 2px,
-transparent 4px
-);
+rgba(0,0,0,0.25);
 
 pointer-events:none;
 
@@ -79,15 +63,22 @@ z-index:0;
 /* ALTAR */
 
 #altar{
+
 position:absolute;
+
 width:100%;
 height:100%;
+
 opacity:0;
+
 transition:2s;
+
 overflow:hidden;
+
+z-index:2;
 }
 
-/* IMAGEM */
+/* IMAGEM PRINCIPAL */
 
 .main-image{
 
@@ -96,17 +87,21 @@ position:absolute;
 top:50%;
 left:50%;
 
-width:100%;
-height:100%;
+width:92%;
+height:92%;
 
 object-fit:contain;
 
-z-index:1;
+transform:
+translate(-50%,-50%);
 
-animation:breath 8s ease-in-out infinite;
-}
+z-index:2;
 
 /* RESPIRAÇÃO */
+
+animation:
+breath 7s ease-in-out infinite;
+}
 
 @keyframes breath{
 
@@ -119,7 +114,7 @@ scale(1);
 50%{
 transform:
 translate(-50%,-50%)
-scale(1.018);
+scale(1.02);
 }
 
 100%{
@@ -130,9 +125,10 @@ scale(1);
 
 }
 
-/* PARTÍCULAS */
+/* PARTÍCULAS DOURADAS */
 
 .particle{
+
 position:absolute;
 
 width:3px;
@@ -141,21 +137,24 @@ height:3px;
 border-radius:50%;
 
 background:
-rgba(255,210,120,0.7);
+rgba(255,210,120,0.85);
 
 box-shadow:
-0 0 8px rgba(255,210,120,0.9);
+0 0 10px rgba(255,210,120,0.9);
+
+pointer-events:none;
+
+z-index:3;
 
 animation:
 floatParticle linear infinite;
-
-z-index:4;
 }
 
 @keyframes floatParticle{
 
 0%{
-transform:translateY(0);
+transform:
+translateY(0);
 opacity:0;
 }
 
@@ -164,7 +163,8 @@ opacity:1;
 }
 
 100%{
-transform:translateY(-120vh);
+transform:
+translateY(-120vh);
 opacity:0;
 }
 
@@ -179,63 +179,65 @@ position:absolute;
 top:65%;
 left:50%;
 
-transform:translate(-50%,-50%);
+transform:
+translate(-50%,-50%);
 
-width:220px;
+width:180px;
 
 text-align:center;
 
-font-size:17px;
+font-size:15px;
 
-line-height:1.22;
+line-height:1.12;
 
-color:#5b3417;
-
-z-index:10;
+color:#5a3315;
 
 font-weight:bold;
 
-/* SOMBRA AJUSTADA */
+z-index:10;
 
 text-shadow:
-0 1px 2px rgba(0,0,0,0.55),
-0 0 4px rgba(0,0,0,0.35);
+0 1px 1px rgba(0,0,0,0.28);
 
 transition:1.5s;
 }
 
-/* BOTÃO */
+/* BOTÃO ORÁCULO */
 
 .button{
 
 position:absolute;
 
-bottom:35px;
+bottom:34px;
 left:50%;
 
-transform:translateX(-50%);
+transform:
+translateX(-50%);
 
-padding:12px 24px;
+padding:
+12px 24px;
 
 border:none;
 
 border-radius:30px;
 
 background:
-rgba(0,0,0,0.65);
+rgba(0,0,0,0.62);
 
 color:#f3d7a0;
 
-font-size:14px;
+font-size:13px;
 
-letter-spacing:2px;
+letter-spacing:1px;
+
+white-space:nowrap;
 
 z-index:20;
 
 backdrop-filter:blur(6px);
 
 box-shadow:
-0 0 15px rgba(255,200,100,0.12);
+0 0 15px rgba(255,200,100,0.15);
 
 transition:1s;
 }
@@ -249,20 +251,21 @@ position:absolute;
 width:100%;
 height:100%;
 
+overflow:hidden;
+
 display:flex;
 
 justify-content:center;
 align-items:center;
 
-overflow:hidden;
+background:black;
 
 z-index:100;
 }
 
 /* PORTAS */
 
-.door-left,
-.door-right{
+.door{
 
 position:absolute;
 
@@ -271,29 +274,28 @@ top:0;
 width:50%;
 height:100%;
 
-background-image:url("door.png");
-
-background-size:200% 100%;
-background-repeat:no-repeat;
+background:
+url("door.png")
+center center / cover
+no-repeat;
 
 z-index:101;
 
 transition:
-2.8s cubic-bezier(.77,0,.18,1);
+2.4s cubic-bezier(.77,0,.18,1);
 }
 
-/* ESQUERDA */
+.left-door{
 
-.door-left{
 left:0;
-background-position:left center;
 }
 
-/* DIREITA */
+.right-door{
 
-.door-right{
 right:0;
-background-position:right center;
+
+transform:
+scaleX(-1);
 }
 
 /* BOTÃO ENTRAR */
@@ -302,13 +304,14 @@ background-position:right center;
 
 position:relative;
 
-padding:18px 32px;
+padding:
+18px 34px;
 
 border:
 1px solid rgba(255,230,180,0.4);
 
 background:
-rgba(0,0,0,0.65);
+rgba(0,0,0,0.62);
 
 color:#f3d7a0;
 
@@ -323,7 +326,7 @@ backdrop-filter:blur(8px);
 z-index:120;
 
 box-shadow:
-0 0 20px rgba(255,220,120,0.15);
+0 0 20px rgba(255,220,120,0.18);
 
 transition:1s;
 }
@@ -331,11 +334,13 @@ transition:1s;
 /* TRANSIÇÕES */
 
 .fade-out{
+
 animation:
 fadeOutMagic 1.2s ease forwards;
 }
 
 .fade-in{
+
 animation:
 fadeInMagic 2s ease;
 }
@@ -344,15 +349,19 @@ fadeInMagic 2s ease;
 
 0%{
 opacity:1;
+
 transform:
 translate(-50%,-50%);
+
 filter:blur(0);
 }
 
 100%{
 opacity:0;
+
 transform:
 translate(-50%,-58%);
+
 filter:blur(14px);
 }
 
@@ -362,15 +371,19 @@ filter:blur(14px);
 
 0%{
 opacity:0;
+
 transform:
 translate(-50%,-42%);
+
 filter:blur(14px);
 }
 
 100%{
 opacity:1;
+
 transform:
 translate(-50%,-50%);
+
 filter:blur(0);
 }
 
@@ -386,13 +399,13 @@ filter:blur(0);
 <div id="welcome">
 
 <div
-class="door-left"
-id="doorLeft">
+class="door left-door"
+id="leftDoor">
 </div>
 
 <div
-class="door-right"
-id="doorRight">
+class="door right-door"
+id="rightDoor">
 </div>
 
 <button
@@ -448,11 +461,10 @@ onclick="revealOracle()">
 
 <audio
 id="bgMusic"
-loop
-playsinline>
+loop>
 
 <source
-src="https://files.catbox.moe/h6a4w1.mp3"
+src="music.mp3"
 type="audio/mpeg">
 
 </audio>
@@ -550,11 +562,11 @@ let side;
 
 if(Math.random() < 0.5){
 
-side = Math.random()*10;
+side = Math.random()*12;
 
 }else{
 
-side = 90 + Math.random()*10;
+side = 88 + Math.random()*12;
 
 }
 
@@ -580,32 +592,50 @@ function enterAltar(){
 
 audio.play();
 
+/* vibração */
+
+if(navigator.vibrate){
+
+navigator.vibrate(120);
+
+}
+
+/* botão some */
+
 const enterButton =
 document.getElementById("enterButton");
 
 enterButton.style.opacity="0";
 
 setTimeout(()=>{
-enterButton.style.display="none";
-},600);
 
-/* PORTAS */
+enterButton.style.display="none";
+
+},500);
+
+/* altar aparece atrás */
+
+document
+.getElementById("altar")
+.style.opacity="1";
+
+/* portas abrem */
 
 setTimeout(()=>{
 
 document
-.getElementById("doorLeft")
+.getElementById("leftDoor")
 .style.transform=
 "translateX(-100%)";
 
 document
-.getElementById("doorRight")
+.getElementById("rightDoor")
 .style.transform=
-"translateX(100%)";
+"translateX(100%) scaleX(-1)";
 
-},500);
+},300);
 
-/* SOME TELA */
+/* remove tela */
 
 setTimeout(()=>{
 
@@ -613,13 +643,7 @@ document
 .getElementById("welcome")
 .style.display="none";
 
-},2800);
-
-/* MOSTRA ALTAR */
-
-document
-.getElementById("altar")
-.style.opacity="1";
+},2600);
 
 }
 
@@ -630,21 +654,13 @@ function revealOracle(){
 const button =
 document.getElementById("oracleButton");
 
-/* VIBRAÇÃO */
-
-if(navigator.vibrate){
-navigator.vibrate(120);
-}
-
-/* BOTÃO SOME */
-
 button.style.opacity="0";
 
 setTimeout(()=>{
-button.style.display="none";
-},700);
 
-/* TEXTO SOME */
+button.style.display="none";
+
+},700);
 
 text.classList.add("fade-out");
 
