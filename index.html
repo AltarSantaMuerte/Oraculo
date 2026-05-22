@@ -1,39 +1,6 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-
-<title>La Santa Muerte</title>
-
-<style>
-
-html, body{
-    margin:0;
-    padding:0;
-    width:100%;
-    height:100%;
-    overflow:hidden;
-    background:#000;
-    font-family:Georgia, serif;
-}
-
-/* ===== FUNDO AMBIENTE ===== */
-
-body{
-    background:
-    radial-gradient(circle at left, rgba(120,0,0,0.15), transparent 35%),
-    radial-gradient(circle at right, rgba(120,0,0,0.15), transparent 35%),
-    linear-gradient(to right,
-    #000 0%,
-    #120000 12%,
-    #000 22%,
-    #000 78%,
-    #120000 88%,
-    #000 100%);
-}
-
-/* ===== CORTINA ===== */
+/* ========================= */
+/* PORTAS DE PEDRA REALISTAS */
+/* ========================= */
 
 #intro{
     position:fixed;
@@ -43,35 +10,78 @@ body{
     background:#000;
 }
 
-.curtain{
+/* FUNDO JÁ COM A SANTA ATRÁS */
+
+#intro::before{
+    content:"";
+    position:absolute;
+    inset:0;
+
+    background-image:url("background.jpg");
+    background-size:contain;
+    background-repeat:no-repeat;
+    background-position:center;
+
+    opacity:1;
+
+    z-index:1;
+}
+
+/* PORTAS */
+
+.door{
     position:absolute;
     top:0;
     width:50%;
     height:100%;
+
+    z-index:3;
+
     background:
-    repeating-linear-gradient(
-        90deg,
-        #180000 0px,
-        #350000 30px,
-        #1b0000 60px,
-        #400000 90px
+    linear-gradient(
+        to right,
+        #151515,
+        #2d2d2d,
+        #111
     );
 
     box-shadow:
-    inset 0 0 50px rgba(0,0,0,0.9),
-    inset 0 0 20px rgba(255,0,0,0.2);
+    inset 0 0 60px rgba(0,0,0,0.9),
+    inset 0 0 20px rgba(255,220,120,0.08);
 
-    transition:transform 2.2s cubic-bezier(.7,0,.2,1);
+    transition:
+    transform 2.4s cubic-bezier(.7,0,.2,1);
+
+    overflow:hidden;
+}
+
+/* TEXTURA PEDRA */
+
+.door::before{
+    content:"";
+    position:absolute;
+    inset:0;
+
+    background:
+    repeating-linear-gradient(
+        0deg,
+        rgba(255,255,255,0.02) 0px,
+        rgba(255,255,255,0.02) 2px,
+        transparent 2px,
+        transparent 18px
+    );
+
+    mix-blend-mode:overlay;
 }
 
 .left{
     left:0;
-    border-right:2px solid rgba(255,180,100,0.2);
+    border-right:2px solid rgba(255,220,120,0.15);
 }
 
 .right{
     right:0;
-    border-left:2px solid rgba(255,180,100,0.2);
+    border-left:2px solid rgba(255,220,120,0.15);
 }
 
 .open .left{
@@ -82,37 +92,40 @@ body{
     transform:translateX(100%);
 }
 
-/* ===== BOTÃO ENTRAR ===== */
+/* ========================= */
+/* BOTÃO ENTRAR */
+/* ========================= */
 
 #enterButton{
     position:absolute;
+
     left:50%;
-    top:72%;
+    top:78%;
+
     transform:translate(-50%, -50%);
-    z-index:10000;
 
-    background:rgba(0,0,0,0.75);
-    color:#f3d9a2;
+    z-index:5;
 
-    border:2px solid rgba(255,220,170,0.25);
+    background:rgba(0,0,0,0.72);
 
-    padding:18px 42px;
+    color:#f0d2a0;
+
+    border:2px solid rgba(255,220,120,0.22);
+
+    padding:18px 36px;
+
     border-radius:50px;
 
-    font-size:1.6rem;
+    font-size:1.2rem;
+
     letter-spacing:4px;
 
-    backdrop-filter:blur(5px);
+    white-space:nowrap;
 
     box-shadow:
-    0 0 20px rgba(255,180,80,0.2),
-    inset 0 0 15px rgba(255,180,80,0.08);
+    0 0 25px rgba(255,180,80,0.22);
 
-    transition:0.6s;
-}
-
-#enterButton:active{
-    transform:translate(-50%, -50%) scale(0.96);
+    transition:0.8s;
 }
 
 .hideButton{
@@ -120,42 +133,36 @@ body{
     transform:translate(-50%, -50%) scale(0.7);
 }
 
-/* ===== ALTAR ===== */
-
-#altar{
-    position:relative;
-    width:100%;
-    height:100%;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    overflow:hidden;
-}
-
-/* ===== IMAGEM ===== */
+/* ========================= */
+/* IMAGEM PRINCIPAL */
+/* ========================= */
 
 #bg{
     position:absolute;
+
     top:50%;
     left:50%;
 
-    width:auto;
-    height:100%;
-
     transform:translate(-50%, -50%);
+
+    height:100%;
+    width:auto;
+
     object-fit:contain;
 
-    animation:breath 7s ease-in-out infinite;
     z-index:1;
+
+    animation:breath 6s ease-in-out infinite;
 }
 
 @keyframes breath{
+
     0%{
         transform:translate(-50%, -50%) scale(1);
     }
 
     50%{
-        transform:translate(-50%, -50%) scale(1.015);
+        transform:translate(-50%, -50%) scale(1.02);
     }
 
     100%{
@@ -163,41 +170,47 @@ body{
     }
 }
 
-/* ===== TEXTOS ===== */
+/* ========================= */
+/* TEXTO */
+/* ========================= */
 
 #textBox{
+
     position:absolute;
-    z-index:5;
+
+    top:66%;
+    left:50%;
+
+    transform:translateX(-50%);
 
     width:52%;
     max-width:500px;
 
-    top:65%;
-
-    left:50%;
-    transform:translateX(-50%);
-
     text-align:center;
 
-    color:#2b1206;
+    z-index:10;
+
+    color:#3a1e0f;
 
     font-size:2rem;
-    line-height:1.18;
+
+    line-height:1.15;
 
     font-weight:bold;
 
     text-shadow:
-    0 1px 0 rgba(255,220,150,0.25),
-    0 2px 4px rgba(0,0,0,0.45);
+    0 2px 3px rgba(255,240,200,0.18),
+    0 3px 8px rgba(0,0,0,0.4);
 
-    animation:textAppear 2s ease;
+    animation:textAppear 1.8s ease;
 }
 
 @keyframes textAppear{
+
     from{
         opacity:0;
-        filter:blur(10px);
-        transform:translateX(-50%) translateY(25px);
+        filter:blur(12px);
+        transform:translateX(-50%) translateY(20px);
     }
 
     to{
@@ -208,10 +221,11 @@ body{
 }
 
 .fadeOut{
-    animation:textDisappear 1.2s forwards;
+    animation:textDisappear 1s forwards;
 }
 
 @keyframes textDisappear{
+
     from{
         opacity:1;
         filter:blur(0px);
@@ -220,112 +234,43 @@ body{
 
     to{
         opacity:0;
-        filter:blur(15px);
-        transform:translateX(-50%) translateY(-35px);
+        filter:blur(12px);
+        transform:translateX(-50%) translateY(-25px);
     }
 }
 
-/* ===== BOTÃO ORÁCULO ===== */
-
-#oracleButton{
-    position:absolute;
-
-    z-index:10;
-
-    bottom:6%;
-
-    left:50%;
-    transform:translateX(-50%);
-
-    background:rgba(0,0,0,0.7);
-
-    color:#f5d29a;
-
-    border:2px solid rgba(255,210,120,0.25);
-
-    padding:16px 38px;
-
-    border-radius:40px;
-
-    font-size:1.25rem;
-    letter-spacing:2px;
-
-    box-shadow:
-    0 0 20px rgba(255,180,80,0.2);
-
-    transition:0.5s;
-}
-
-#oracleButton:active{
-    transform:translateX(-50%) scale(0.95);
-}
-
-.hideOracle{
-    opacity:0;
-    transform:translateX(-50%) scale(0.7);
-}
-
-/* ===== FUMAÇA ===== */
+/* ========================= */
+/* REMOVE FUMAÇA ANTIGA */
+/* ========================= */
 
 .smoke{
+    display:none !important;
+}
+
+/* ========================= */
+/* PARTÍCULAS OURO */
+/* ========================= */
+
+.particle{
     position:absolute;
-    bottom:-200px;
 
-    width:250px;
-    height:500px;
+    width:3px;
+    height:3px;
 
-    background:
-    radial-gradient(circle,
-    rgba(255,255,255,0.18) 0%,
-    rgba(255,255,255,0.05) 40%,
-    transparent 70%);
+    border-radius:50%;
 
-    filter:blur(30px);
+    background:rgba(255,210,120,0.7);
 
-    animation:smokeUp 16s linear infinite;
+    box-shadow:
+    0 0 10px rgba(255,190,90,0.7);
+
+    animation:floatUp linear infinite;
 
     z-index:2;
 }
 
-.smoke.leftSmoke{
-    left:-80px;
-}
-
-.smoke.rightSmoke{
-    right:-80px;
-}
-
-@keyframes smokeUp{
-    from{
-        transform:translateY(0) scale(1);
-        opacity:0;
-    }
-
-    20%{
-        opacity:0.5;
-    }
-
-    100%{
-        transform:translateY(-1000px) scale(1.8);
-        opacity:0;
-    }
-}
-
-/* ===== PARTÍCULAS ===== */
-
-.particle{
-    position:absolute;
-    width:3px;
-    height:3px;
-    border-radius:50%;
-    background:rgba(255,210,120,0.7);
-
-    box-shadow:0 0 12px rgba(255,200,100,0.7);
-
-    animation:floatUp linear infinite;
-}
-
 @keyframes floatUp{
+
     from{
         transform:translateY(0);
         opacity:0;
@@ -336,205 +281,80 @@ body{
     }
 
     100%{
-        transform:translateY(-110vh);
+        transform:translateY(-120vh);
         opacity:0;
     }
 }
 
-/* ===== MOBILE ===== */
+/* ========================= */
+/* FUNDO PRETO AMBIENTADO */
+/* ========================= */
+
+body::before{
+
+    content:"";
+
+    position:fixed;
+
+    inset:0;
+
+    pointer-events:none;
+
+    background:
+    radial-gradient(circle at left,
+    rgba(130,70,0,0.12),
+    transparent 28%),
+
+    radial-gradient(circle at right,
+    rgba(130,70,0,0.12),
+    transparent 28%),
+
+    linear-gradient(to bottom,
+    rgba(255,180,80,0.03),
+    transparent 25%);
+
+    z-index:0;
+}
+
+/* ========================= */
+/* MOBILE */
+/* ========================= */
 
 @media(max-width:768px){
 
     #bg{
-        height:auto;
         width:100%;
+        height:auto;
     }
 
     #textBox{
-        width:58%;
-        top:66%;
-        font-size:1.1rem;
-        line-height:1.25;
+
+        width:56%;
+
+        top:67%;
+
+        font-size:1.08rem;
+
+        line-height:1.2;
     }
 
     #oracleButton{
-        bottom:5%;
+
+        bottom:4%;
+
         font-size:1rem;
-        padding:14px 28px;
+
+        padding:14px 26px;
     }
 
     #enterButton{
-        top:74%;
-        font-size:1.2rem;
+
+        top:78%;
+
+        font-size:1rem;
+
+        padding:16px 28px;
+
+        letter-spacing:2px;
     }
 }
-
-</style>
-</head>
-
-<body>
-
-<!-- INTRO -->
-<div id="intro">
-
-    <div class="curtain left"></div>
-    <div class="curtain right"></div>
-
-    <button id="enterButton">
-        ✦ Entrar al Altar ✦
-    </button>
-
-</div>
-
-<!-- ALTAR -->
-<div id="altar">
-
-    <img src="background.jpg" id="bg">
-
-    <div class="smoke leftSmoke"></div>
-    <div class="smoke rightSmoke"></div>
-
-    <div id="textBox">
-
-        Santa Muerte, guía mis pensamientos,
-        protege mi espíritu y aleja toda oscuridad de mi camino.
-        Permite que mi alma encuentre claridad,
-        paz y fuerza para continuar. Amén.
-
-    </div>
-
-    <button id="oracleButton">
-        Revelar Oráculo
-    </button>
-
-</div>
-
-<audio id="music" loop playsinline>
-    <source src="https://files.catbox.moe/h6a4w1.mp3" type="audio/mpeg">
-</audio>
-
-<script>
-
-/* ===== ORÁCULOS ===== */
-
-const messages = [
-
-"Lo que hoy parece confusión, mañana será revelación.",
-
-"Tu energía atrae aquello que no dices en voz alta.",
-
-"La oscuridad también protege aquello que aún no debe ser visto.",
-
-"Escucha el silencio. Allí está la respuesta.",
-
-"Hay caminos que solo se abren cuando dejas de forzarlos.",
-
-"Una verdad oculta comenzará a mostrarse pronto.",
-
-"Tu intuición ya sabe lo que tu mente teme aceptar.",
-
-"La Santa observa tus pasos incluso cuando dudas.",
-
-"El miedo desaparece cuando aceptas tu transformación.",
-
-"Algo está cambiando alrededor de ti esta noche."
-
-];
-
-/* ===== ELEMENTOS ===== */
-
-const intro = document.getElementById("intro");
-const enterButton = document.getElementById("enterButton");
-
-const music = document.getElementById("music");
-
-const textBox = document.getElementById("textBox");
-const oracleButton = document.getElementById("oracleButton");
-
-/* ===== ENTRAR ===== */
-
-enterButton.addEventListener("click", ()=>{
-
-    enterButton.classList.add("hideButton");
-
-    setTimeout(()=>{
-
-        intro.classList.add("open");
-
-    }, 400);
-
-    /* SOM */
-
-    music.volume = 0.7;
-
-    music.play().catch(()=>{});
-
-});
-
-/* ===== ORÁCULO ===== */
-
-oracleButton.addEventListener("click", ()=>{
-
-    if(navigator.vibrate){
-        navigator.vibrate(150);
-    }
-
-    oracleButton.classList.add("hideOracle");
-
-    textBox.classList.add("fadeOut");
-
-    setTimeout(()=>{
-
-        const random =
-        messages[Math.floor(Math.random() * messages.length)];
-
-        textBox.innerHTML = random;
-
-        textBox.classList.remove("fadeOut");
-
-        void textBox.offsetWidth;
-
-        textBox.style.animation =
-        "textAppear 2s ease";
-
-    }, 1200);
-
-});
-
-/* ===== PARTÍCULAS LATERAIS ===== */
-
-for(let i=0;i<35;i++){
-
-    const p = document.createElement("div");
-
-    p.classList.add("particle");
-
-    const side = Math.random() > 0.5;
-
-    if(side){
-
-        p.style.left =
-        (Math.random() * 12) + "%";
-
-    }else{
-
-        p.style.left =
-        (88 + Math.random() * 12) + "%";
-    }
-
-    p.style.bottom = "-20px";
-
-    p.style.animationDuration =
-    (8 + Math.random() * 12) + "s";
-
-    p.style.animationDelay =
-    Math.random() * 10 + "s";
-
-    document.body.appendChild(p);
-
-}
-
-</script>
-
-</body>
-</html>
