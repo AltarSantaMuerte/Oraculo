@@ -1,10 +1,18 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-<title>La Santa Muerte</title>
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width,
+initial-scale=1.0,
+maximum-scale=1.0,
+user-scalable=no">
+
+<meta name="theme-color" content="#000000">
+
+<title>Oráculo de La Santa Muerte</title>
 
 <style>
 
@@ -14,70 +22,91 @@ padding:0;
 box-sizing:border-box;
 }
 
-html,body{
+html, body{
 width:100%;
 height:100%;
 overflow:hidden;
-font-family:Georgia,serif;
-background:#000;
+
+touch-action:manipulation;
+overscroll-behavior:none;
 }
 
-/* ========================= */
-/* FUNDO NOVO */
-/* ========================= */
-
 body{
+
+position:relative;
+font-family:serif;
+background:#000;
+
+/* FUNDO NOVO */
 
 background-image:url("ritual-bg.jpg");
 
 background-size:cover;
 background-position:center;
 background-repeat:no-repeat;
-
-background-color:#000;
 }
 
-/* ========================= */
-/* ALTAR */
-/* ========================= */
+/* FUNDO LATERAL */
 
-#altar{
-position:fixed;
+body::before{
+
+content:"";
+
+position:absolute;
 inset:0;
 
-display:flex;
-justify-content:center;
-align-items:center;
+background:
 
-overflow:hidden;
+radial-gradient(
+circle at center,
+transparent 35%,
+rgba(80,20,0,0.10) 70%,
+rgba(120,70,20,0.08) 100%
+),
 
-z-index:1;
+repeating-linear-gradient(
+90deg,
+transparent 0px,
+rgba(255,180,80,0.018) 2px,
+transparent 4px
+);
+
+pointer-events:none;
+
+z-index:0;
 }
 
-/* ========================= */
-/* SANTA */
-/* ========================= */
+/* ALTAR */
 
-#bg{
+#altar{
+position:absolute;
+width:100%;
+height:100%;
+opacity:0;
+transition:2s;
+overflow:hidden;
+}
+
+/* IMAGEM */
+
+.main-image{
 
 position:absolute;
 
 top:50%;
 left:50%;
 
-transform:
-translate(-50%,-50%);
-
+width:100%;
 height:100%;
-width:auto;
 
 object-fit:contain;
 
-z-index:2;
+z-index:1;
 
-animation:
-breath 6s ease-in-out infinite;
+animation:breath 8s ease-in-out infinite;
 }
+
+/* RESPIRAÇÃO */
 
 @keyframes breath{
 
@@ -101,270 +130,9 @@ scale(1);
 
 }
 
-/* ========================= */
-/* TEXTO */
-/* ========================= */
-
-#textBox{
-
-position:absolute;
-
-top:66%;
-left:50%;
-
-transform:
-translateX(-50%);
-
-width:45%;
-max-width:420px;
-
-z-index:10;
-
-text-align:center;
-
-font-size:1.75rem;
-
-line-height:1.1;
-
-font-weight:bold;
-
-color:#35180c;
-
-animation:
-textIn 1.6s ease;
-}
-
-@keyframes textIn{
-
-from{
-opacity:0;
-filter:blur(10px);
-
-transform:
-translateX(-50%)
-translateY(20px);
-}
-
-to{
-opacity:1;
-filter:blur(0px);
-
-transform:
-translateX(-50%)
-translateY(0px);
-}
-
-}
-
-.fadeOut{
-
-animation:
-textOut 1s forwards;
-}
-
-@keyframes textOut{
-
-from{
-opacity:1;
-filter:blur(0px);
-
-transform:
-translateX(-50%)
-translateY(0px);
-}
-
-to{
-opacity:0;
-filter:blur(10px);
-
-transform:
-translateX(-50%)
-translateY(-25px);
-}
-
-}
-
-/* ========================= */
-/* BOTÃO ORÁCULO */
-/* ========================= */
-
-#oracleButton{
-
-position:absolute;
-
-bottom:5%;
-left:50%;
-
-transform:
-translateX(-50%);
-
-z-index:20;
-
-background:
-rgba(0,0,0,0.72);
-
-color:#f0d2a0;
-
-border:
-2px solid rgba(255,220,120,0.18);
-
-padding:15px 32px;
-
-border-radius:40px;
-
-font-size:1.1rem;
-
-letter-spacing:2px;
-
-box-shadow:
-0 0 18px rgba(255,180,80,0.14);
-
-transition:0.7s;
-}
-
-.hideOracle{
-
-opacity:0;
-
-transform:
-translateX(-50%)
-scale(0.7);
-
-filter:blur(10px);
-}
-
-/* ========================= */
-/* INTRO */
-/* ========================= */
-
-#intro{
-
-position:fixed;
-inset:0;
-
-z-index:9999;
-
-overflow:hidden;
-}
-
-/* FUNDO ATRÁS DAS PORTAS */
-
-#introBackground{
-
-position:absolute;
-inset:0;
-
-background-image:url("background.jpg");
-
-background-size:contain;
-background-repeat:no-repeat;
-background-position:center;
-
-background-color:#000;
-
-z-index:1;
-}
-
-/* ========================= */
-/* PORTAS */
-/* ========================= */
-
-.door{
-
-position:absolute;
-
-top:0;
-
-width:50%;
-height:100%;
-
-z-index:5;
-
-background-image:url("door.png");
-
-background-size:200% 100%;
-
-background-repeat:no-repeat;
-
-transition:
-transform 2.2s cubic-bezier(.7,0,.2,1);
-}
-
-.leftDoor{
-left:0;
-background-position:left center;
-}
-
-.rightDoor{
-right:0;
-background-position:right center;
-}
-
-.open .leftDoor{
-transform:translateX(-100%);
-}
-
-.open .rightDoor{
-transform:translateX(100%);
-}
-
-/* ========================= */
-/* BOTÃO ENTRAR */
-/* ========================= */
-
-#enterButton{
-
-position:absolute;
-
-left:50%;
-top:77%;
-
-transform:
-translate(-50%,-50%);
-
-z-index:10;
-
-background:
-rgba(0,0,0,0.74);
-
-color:#f2d4a0;
-
-border:
-2px solid rgba(255,220,120,0.18);
-
-padding:18px 34px;
-
-border-radius:40px;
-
-font-size:1.05rem;
-
-letter-spacing:3px;
-
-white-space:nowrap;
-
-box-shadow:
-0 0 20px rgba(255,180,80,0.15);
-
-transition:0.8s;
-}
-
-.hideButton{
-
-opacity:0;
-
-transform:
-translate(-50%,-50%)
-scale(0.7);
-
-filter:blur(10px);
-}
-
-/* ========================= */
 /* PARTÍCULAS */
-/* ========================= */
 
 .particle{
-
 position:absolute;
 
 width:3px;
@@ -373,25 +141,25 @@ height:3px;
 border-radius:50%;
 
 background:
-rgba(255,210,120,0.8);
+rgba(255,210,120,0.7);
 
 box-shadow:
-0 0 10px rgba(255,190,90,0.8);
+0 0 8px rgba(255,210,120,0.9);
 
 animation:
-floatUp linear infinite;
+floatParticle linear infinite;
 
-z-index:3;
+z-index:4;
 }
 
-@keyframes floatUp{
+@keyframes floatParticle{
 
-from{
+0%{
 transform:translateY(0);
 opacity:0;
 }
 
-20%{
+10%{
 opacity:1;
 }
 
@@ -402,46 +170,208 @@ opacity:0;
 
 }
 
-/* ========================= */
-/* MOBILE */
-/* ========================= */
+/* TEXTO */
 
-@media(max-width:768px){
+.scroll-text{
 
-#bg{
-width:100%;
-height:auto;
+position:absolute;
+
+top:65%;
+left:50%;
+
+transform:translate(-50%,-50%);
+
+width:220px;
+
+text-align:center;
+
+font-size:17px;
+
+line-height:1.22;
+
+color:#5b3417;
+
+z-index:10;
+
+font-weight:bold;
+
+/* SOMBRA AJUSTADA */
+
+text-shadow:
+0 1px 2px rgba(0,0,0,0.55),
+0 0 4px rgba(0,0,0,0.35);
+
+transition:1.5s;
 }
 
-#textBox{
+/* BOTÃO */
 
-width:50%;
+.button{
 
-top:66.5%;
+position:absolute;
 
-font-size:1rem;
+bottom:35px;
+left:50%;
 
-line-height:1.15;
-}
+transform:translateX(-50%);
 
-#oracleButton{
+padding:12px 24px;
 
-bottom:4%;
+border:none;
 
-font-size:0.92rem;
+border-radius:30px;
 
-padding:13px 24px;
-}
+background:
+rgba(0,0,0,0.65);
 
-#enterButton{
+color:#f3d7a0;
 
-top:78%;
-
-font-size:0.95rem;
-
-padding:16px 24px;
+font-size:14px;
 
 letter-spacing:2px;
+
+z-index:20;
+
+backdrop-filter:blur(6px);
+
+box-shadow:
+0 0 15px rgba(255,200,100,0.12);
+
+transition:1s;
+}
+
+/* ENTRADA */
+
+#welcome{
+
+position:absolute;
+
+width:100%;
+height:100%;
+
+display:flex;
+
+justify-content:center;
+align-items:center;
+
+overflow:hidden;
+
+z-index:100;
+}
+
+/* PORTAS */
+
+.door-left,
+.door-right{
+
+position:absolute;
+
+top:0;
+
+width:50%;
+height:100%;
+
+background-image:url("door.png");
+
+background-size:200% 100%;
+background-repeat:no-repeat;
+
+z-index:101;
+
+transition:
+2.8s cubic-bezier(.77,0,.18,1);
+}
+
+/* ESQUERDA */
+
+.door-left{
+left:0;
+background-position:left center;
+}
+
+/* DIREITA */
+
+.door-right{
+right:0;
+background-position:right center;
+}
+
+/* BOTÃO ENTRAR */
+
+.enter-button{
+
+position:relative;
+
+padding:18px 32px;
+
+border:
+1px solid rgba(255,230,180,0.4);
+
+background:
+rgba(0,0,0,0.65);
+
+color:#f3d7a0;
+
+font-size:18px;
+
+letter-spacing:3px;
+
+border-radius:40px;
+
+backdrop-filter:blur(8px);
+
+z-index:120;
+
+box-shadow:
+0 0 20px rgba(255,220,120,0.15);
+
+transition:1s;
+}
+
+/* TRANSIÇÕES */
+
+.fade-out{
+animation:
+fadeOutMagic 1.2s ease forwards;
+}
+
+.fade-in{
+animation:
+fadeInMagic 2s ease;
+}
+
+@keyframes fadeOutMagic{
+
+0%{
+opacity:1;
+transform:
+translate(-50%,-50%);
+filter:blur(0);
+}
+
+100%{
+opacity:0;
+transform:
+translate(-50%,-58%);
+filter:blur(14px);
+}
+
+}
+
+@keyframes fadeInMagic{
+
+0%{
+opacity:0;
+transform:
+translate(-50%,-42%);
+filter:blur(14px);
+}
+
+100%{
+opacity:1;
+transform:
+translate(-50%,-50%);
+filter:blur(0);
 }
 
 }
@@ -451,15 +381,42 @@ letter-spacing:2px;
 
 <body>
 
+<!-- ENTRADA -->
+
+<div id="welcome">
+
+<div
+class="door-left"
+id="doorLeft">
+</div>
+
+<div
+class="door-right"
+id="doorRight">
+</div>
+
+<button
+class="enter-button"
+id="enterButton"
+onclick="enterAltar()">
+
+✦ Entrar al Altar ✦
+
+</button>
+
+</div>
+
 <!-- ALTAR -->
 
 <div id="altar">
 
 <img
-src="background.jpg"
-id="bg">
+class="main-image"
+src="background.jpg">
 
-<div id="textBox">
+<div
+class="scroll-text"
+id="scrollText">
 
 Santa Muerte,
 guía mis pensamientos,
@@ -476,7 +433,10 @@ Amén.
 
 </div>
 
-<button id="oracleButton">
+<button
+class="button"
+id="oracleButton"
+onclick="revealOracle()">
 
 ✦ Revelar Oráculo ✦
 
@@ -484,27 +444,10 @@ Amén.
 
 </div>
 
-<!-- INTRO -->
-
-<div id="intro">
-
-<div id="introBackground"></div>
-
-<div class="door leftDoor"></div>
-<div class="door rightDoor"></div>
-
-<button id="enterButton">
-
-✦ Entrar al Altar ✦
-
-</button>
-
-</div>
-
-<!-- ÁUDIO -->
+<!-- MÚSICA -->
 
 <audio
-id="music"
+id="bgMusic"
 loop
 playsinline>
 
@@ -516,139 +459,211 @@ type="audio/mpeg">
 
 <script>
 
-/* ========================= */
-/* FRASES */
-/* ========================= */
+/* ÁUDIO */
 
-const messages=[
+const audio =
+document.getElementById("bgMusic");
 
-"Lo que hoy parece confusión, mañana será revelación.",
+/* VISITAS */
 
-"Tu intuición ya sabe lo que tu mente teme aceptar.",
+let visitCount =
+localStorage.getItem("visitCount") || 0;
 
-"Hay caminos que solo se abren cuando dejas de forzarlos.",
+visitCount++;
 
-"La oscuridad también protege aquello que aún no debe ser visto.",
+localStorage.setItem(
+"visitCount",
+visitCount
+);
 
-"Escucha el silencio. Allí está la respuesta.",
+/* TEXTO */
 
-"El miedo desaparece cuando aceptas tu transformación.",
+const text =
+document.getElementById("scrollText");
 
-"La Santa observa tus pasos en silencio.",
+/* ORAÇÃO ESPECIAL */
 
-"Tu energía está cambiando esta noche."
+if(visitCount % 20 == 0){
 
-];
+text.innerHTML =
 
-/* ========================= */
-/* ELEMENTOS */
-/* ========================= */
-
-const enterButton=
-document.getElementById("enterButton");
-
-const intro=
-document.getElementById("intro");
-
-const music=
-document.getElementById("music");
-
-const textBox=
-document.getElementById("textBox");
-
-const oracleButton=
-document.getElementById("oracleButton");
-
-/* ========================= */
-/* ENTRAR */
-/* ========================= */
-
-enterButton.addEventListener("click",()=>{
-
-music.volume=0.7;
-
-music.play().catch(()=>{});
-
-enterButton.classList.add("hideButton");
-
-setTimeout(()=>{
-
-intro.classList.add("open");
-
-},400);
-
-});
-
-/* ========================= */
-/* ORÁCULO */
-/* ========================= */
-
-oracleButton.addEventListener("click",()=>{
-
-if(navigator.vibrate){
-
-navigator.vibrate(120);
+"La Santa Muerte abre un nuevo ciclo ante ti.<br><br>Que toda sombra se transforme en sabiduría y toda herida en fuerza.<br><br>Hoy el altar escucha tu espíritu con especial atención.";
 
 }
 
-oracleButton.classList.add("hideOracle");
+/* FRASES */
 
-textBox.classList.add("fadeOut");
+const messages = [
 
-setTimeout(()=>{
+"La Santa dice: descansa, también sobreviviste hoy.",
 
-const random=
-messages[
-Math.floor(Math.random()*messages.length)
+"No cargues el mundo entero esta noche.",
+
+"La Flaquita ve tu cansancio.",
+
+"Todo cambia incluso el dolor.",
+
+"Respira. Aún hay camino.",
+
+"La Santa protege corazones cansados.",
+
+"No luches contra cada sombra.",
+
+"La paz también llega despacio.",
+
+"La muerte también enseña calma.",
+
+"Tu alma aún tiene luz.",
+
+"No temas al cambio.",
+
+"Todo renace después del silencio.",
+
+"La Santa escucha tu dolor.",
+
+"Las heridas también enseñan.",
+
+"No toda oscuridad es enemiga.",
+
+"La calma llegará.",
+
+"Tu espíritu sigue fuerte.",
+
+"La Flaquita protege tu camino.",
+
+"Cada noche trae revelaciones.",
+
+"No temas soltar lo que pesa."
+
 ];
 
-textBox.innerHTML=random;
-
-textBox.classList.remove("fadeOut");
-
-void textBox.offsetWidth;
-
-textBox.style.animation=
-"textIn 1.6s ease";
-
-},1000);
-
-});
-
-/* ========================= */
 /* PARTÍCULAS */
-/* ========================= */
 
-for(let i=0;i<35;i++){
+for(let i=0;i<45;i++){
 
-const p=
+const particle =
 document.createElement("div");
 
-p.classList.add("particle");
+particle.classList.add("particle");
 
-const leftSide=
-Math.random()>0.5;
+let side;
 
-if(leftSide){
+if(Math.random() < 0.5){
 
-p.style.left=
-(Math.random()*12)+"%";
+side = Math.random()*10;
 
 }else{
 
-p.style.left=
-(88+Math.random()*12)+"%";
+side = 90 + Math.random()*10;
+
 }
 
-p.style.bottom="-20px";
+particle.style.left =
+side + "vw";
 
-p.style.animationDuration=
-(8+Math.random()*10)+"s";
+particle.style.bottom =
+"-10px";
 
-p.style.animationDelay=
+particle.style.animationDuration =
+(10 + Math.random()*12)+"s";
+
+particle.style.animationDelay =
 Math.random()*10+"s";
 
-document.body.appendChild(p);
+document.body.appendChild(particle);
+
+}
+
+/* ENTRAR */
+
+function enterAltar(){
+
+audio.play();
+
+const enterButton =
+document.getElementById("enterButton");
+
+enterButton.style.opacity="0";
+
+setTimeout(()=>{
+enterButton.style.display="none";
+},600);
+
+/* PORTAS */
+
+setTimeout(()=>{
+
+document
+.getElementById("doorLeft")
+.style.transform=
+"translateX(-100%)";
+
+document
+.getElementById("doorRight")
+.style.transform=
+"translateX(100%)";
+
+},500);
+
+/* SOME TELA */
+
+setTimeout(()=>{
+
+document
+.getElementById("welcome")
+.style.display="none";
+
+},2800);
+
+/* MOSTRA ALTAR */
+
+document
+.getElementById("altar")
+.style.opacity="1";
+
+}
+
+/* ORÁCULO */
+
+function revealOracle(){
+
+const button =
+document.getElementById("oracleButton");
+
+/* VIBRAÇÃO */
+
+if(navigator.vibrate){
+navigator.vibrate(120);
+}
+
+/* BOTÃO SOME */
+
+button.style.opacity="0";
+
+setTimeout(()=>{
+button.style.display="none";
+},700);
+
+/* TEXTO SOME */
+
+text.classList.add("fade-out");
+
+setTimeout(()=>{
+
+const randomMessage =
+messages[Math.floor(
+Math.random()*messages.length)];
+
+text.innerHTML =
+randomMessage;
+
+text.classList.remove("fade-out");
+
+void text.offsetWidth;
+
+text.classList.add("fade-in");
+
+},1200);
 
 }
 
