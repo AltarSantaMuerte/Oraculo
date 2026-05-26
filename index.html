@@ -31,8 +31,66 @@ font-family:serif;
 touch-action:manipulation;
 }
 
-body{
+/* DESKTOP BLOCK */
+
+#desktopBlock{
+
+position:fixed;
+inset:0;
+
+display:none;
+
+justify-content:center;
+align-items:center;
+
+overflow:hidden;
+
+background:black;
+
+z-index:999999;
+}
+
+#desktopBlock img{
+
+position:absolute;
+
+width:100%;
+height:100%;
+
+object-fit:cover;
+
+opacity:0.45;
+}
+
+.desktop-message{
+
 position:relative;
+
+width:80%;
+
+text-align:center;
+
+color:#f3d7a0;
+
+font-size:34px;
+
+line-height:1.4;
+
+letter-spacing:1px;
+
+text-shadow:
+0 0 15px rgba(0,0,0,0.9);
+
+z-index:2;
+}
+
+/* MOBILE */
+
+#mobileSite{
+width:100%;
+height:100%;
+position:relative;
+overflow:hidden;
 }
 
 /* OVERLAY */
@@ -51,12 +109,6 @@ circle at center,
 transparent 45%,
 rgba(0,0,0,0.35) 75%,
 rgba(0,0,0,0.70) 100%
-),
-
-linear-gradient(
-to bottom,
-rgba(40,15,0,0.12),
-rgba(0,0,0,0.30)
 );
 
 pointer-events:none;
@@ -82,50 +134,7 @@ overflow:hidden;
 z-index:2;
 }
 
-/* CONTAINER SANTA */
-
-.santa-container{
-
-position:absolute;
-
-top:50%;
-left:50%;
-
-width:100%;
-height:100%;
-
-transform:
-translate(-50%,-50%);
-
-animation:
-breath 7s ease-in-out infinite;
-
-z-index:2;
-}
-
-/* FUNDO RITUAL */
-
-.ritual-bg{
-
-position:absolute;
-
-top:50%;
-left:50%;
-
-width:100%;
-height:100%;
-
-object-fit:cover;
-
-transform:
-translate(-50%,-50%);
-
-z-index:1;
-
-opacity:0.95;
-}
-
-/* IMAGEM SANTA */
+/* IMAGEM */
 
 .main-image{
 
@@ -134,8 +143,8 @@ position:absolute;
 top:50%;
 left:50%;
 
-width:96%;
-height:96%;
+width:100%;
+height:100%;
 
 object-fit:cover;
 
@@ -143,6 +152,9 @@ transform:
 translate(-50%,-50%);
 
 z-index:2;
+
+animation:
+breath 7s ease-in-out infinite;
 }
 
 /* RESPIRAÇÃO */
@@ -169,107 +181,69 @@ scale(1);
 
 }
 
-/* PARTÍCULAS */
-
-.particle{
-
-position:absolute;
-
-width:3px;
-height:3px;
-
-border-radius:50%;
-
-background:
-rgba(255,210,120,0.90);
-
-box-shadow:
-0 0 10px rgba(255,210,120,0.95);
-
-pointer-events:none;
-
-z-index:3;
-
-animation:
-floatParticle linear infinite;
-}
-
-@keyframes floatParticle{
-
-0%{
-transform:
-translateY(0);
-opacity:0;
-}
-
-10%{
-opacity:1;
-}
-
-100%{
-transform:
-translateY(-120vh);
-opacity:0;
-}
-
-}
-
-/* CONTAINER TEXTO */
+/* TEXTO */
 
 .scroll-container{
 
 position:absolute;
 
-top:61.5%;
+top:63.2%;
 left:50%;
 
 transform:
 translate(-50%,-50%);
 
-width:132px;
-height:146px;
+width:142px;
+height:150px;
 
 display:flex;
 
 justify-content:center;
 align-items:center;
 
-padding:5px;
-
 overflow:hidden;
 
 z-index:10;
 }
 
-/* TEXTO */
-
 .scroll-text{
-
-position:relative;
 
 width:100%;
 
 text-align:center;
 
-font-size:12.3px;
+font-size:11.8px;
 
-line-height:1.05;
-
-color:#4a2410;
+line-height:1.06;
 
 font-weight:bold;
 
-word-wrap:break-word;
-
-overflow:hidden;
-
-transform:none;
+color:#4a2410;
 
 text-shadow:
-0 1px 0 rgba(255,255,255,0.08),
-0 1px 2px rgba(0,0,0,0.22);
+0 1px 1px rgba(255,255,255,0.05),
+0 1px 2px rgba(0,0,0,0.15);
 
-transition:1.5s;
+animation:
+breathText 7s ease-in-out infinite;
+}
+
+/* TEXTO RESPIRANDO */
+
+@keyframes breathText{
+
+0%{
+transform:scale(1);
+}
+
+50%{
+transform:scale(1.018);
+}
+
+100%{
+transform:scale(1);
+}
+
 }
 
 /* BOTÃO ORÁCULO */
@@ -278,7 +252,7 @@ transition:1.5s;
 
 position:absolute;
 
-bottom:96px;
+bottom:78px;
 left:50%;
 
 transform:
@@ -354,21 +328,13 @@ transition:
 2.4s cubic-bezier(.77,0,.18,1);
 }
 
-/* ESQUERDA */
-
 .left-door{
-
 left:0;
-
 background-position:left center;
 }
 
-/* DIREITA */
-
 .right-door{
-
 right:0;
-
 background-position:right center;
 }
 
@@ -376,7 +342,13 @@ background-position:right center;
 
 .enter-button{
 
-position:relative;
+position:absolute;
+
+bottom:120px;
+left:50%;
+
+transform:
+translateX(-50%);
 
 padding:
 18px 34px;
@@ -403,6 +375,51 @@ box-shadow:
 0 0 20px rgba(255,220,120,0.18);
 
 transition:1s;
+}
+
+/* PARTÍCULAS */
+
+.particle{
+
+position:absolute;
+
+width:3px;
+height:3px;
+
+border-radius:50%;
+
+background:
+rgba(255,210,120,0.90);
+
+box-shadow:
+0 0 10px rgba(255,210,120,0.95);
+
+pointer-events:none;
+
+z-index:3;
+
+animation:
+floatParticle linear infinite;
+}
+
+@keyframes floatParticle{
+
+0%{
+transform:
+translateY(0);
+opacity:0;
+}
+
+10%{
+opacity:1;
+}
+
+100%{
+transform:
+translateY(-120vh);
+opacity:0;
+}
+
 }
 
 /* TRANSIÇÕES */
@@ -451,10 +468,46 @@ filter:blur(0);
 
 }
 
+/* DESKTOP */
+
+@media (min-width: 900px){
+
+#mobileSite{
+display:none;
+}
+
+#desktopBlock{
+display:flex;
+}
+
+}
+
 </style>
 </head>
 
 <body>
+
+<!-- DESKTOP -->
+
+<div id="desktopBlock">
+
+<img src="ritual-bg.jpg">
+
+<div class="desktop-message">
+
+Este altar fue creado para ser vivido desde un smartphone.
+
+<br><br>
+
+Accede desde tu teléfono móvil.
+
+</div>
+
+</div>
+
+<!-- MOBILE -->
+
+<div id="mobileSite">
 
 <!-- ENTRADA -->
 
@@ -485,12 +538,6 @@ onclick="enterAltar()">
 
 <div id="altar">
 
-<div class="santa-container">
-
-<img
-class="ritual-bg"
-src="ritual-bg.jpg">
-
 <img
 class="main-image"
 src="background.jpg">
@@ -513,8 +560,6 @@ paz y fuerza
 para continuar.
 
 Amén.
-
-</div>
 
 </div>
 
@@ -595,11 +640,11 @@ let side;
 
 if(Math.random() < 0.5){
 
-side = Math.random()*22;
+side = Math.random()*20;
 
 }else{
 
-side = 78 + Math.random()*22;
+side = 80 + Math.random()*20;
 
 }
 
@@ -713,6 +758,8 @@ text.classList.add("fade-in");
 }
 
 </script>
+
+</div>
 
 </body>
 </html>
