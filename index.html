@@ -31,7 +31,7 @@ font-family:serif;
 touch-action:manipulation;
 }
 
-/* DESKTOP BLOCK */
+/* DESKTOP */
 
 #desktopBlock{
 
@@ -43,28 +43,12 @@ display:none;
 justify-content:center;
 align-items:center;
 
-overflow:hidden;
-
 background:black;
 
 z-index:999999;
 }
 
-#desktopBlock img{
-
-position:absolute;
-
-width:100%;
-height:100%;
-
-object-fit:cover;
-
-opacity:0.45;
-}
-
 .desktop-message{
-
-position:relative;
 
 width:80%;
 
@@ -80,8 +64,6 @@ letter-spacing:1px;
 
 text-shadow:
 0 0 15px rgba(0,0,0,0.9);
-
-z-index:2;
 }
 
 /* MOBILE */
@@ -187,7 +169,7 @@ scale(1);
 
 position:absolute;
 
-top:63.2%;
+top:63%;
 left:50%;
 
 transform:
@@ -212,9 +194,9 @@ width:100%;
 
 text-align:center;
 
-font-size:11.8px;
+font-size:13.2px;
 
-line-height:1.06;
+line-height:1.08;
 
 font-weight:bold;
 
@@ -252,7 +234,7 @@ transform:scale(1);
 
 position:absolute;
 
-bottom:78px;
+bottom:68px;
 left:50%;
 
 transform:
@@ -368,6 +350,8 @@ letter-spacing:3px;
 border-radius:40px;
 
 backdrop-filter:blur(8px);
+
+white-space:nowrap;
 
 z-index:120;
 
@@ -490,8 +474,6 @@ display:flex;
 <!-- DESKTOP -->
 
 <div id="desktopBlock">
-
-<img src="ritual-bg.jpg">
 
 <div class="desktop-message">
 
